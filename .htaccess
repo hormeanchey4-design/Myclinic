@@ -1,0 +1,18 @@
+Options -Indexes
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Block access to sensitive files
+RewriteRule ^(?:config|includes)/.*\.(?:php|ini|log|env)$ - [F,L,NC]
+RewriteRule ^(?:database\.sql|README\.md|SETUP\.md|START_HERE\.md|FILE_LIST\.md|fix_passwords\.php)$ - [F,L,NC]
+RewriteRule ^uploads/.*\.(?:php[0-9]?|phtml|phar|pl|py|cgi|sh|exe)$ - [F,L,NC]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
